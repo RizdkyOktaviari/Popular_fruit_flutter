@@ -7,8 +7,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Fruit_detail.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 class Page1 extends StatefulWidget {
   const Page1({super.key});
@@ -18,6 +21,61 @@ class Page1 extends StatefulWidget {
 }
 
 class _Page1State extends State<Page1> {
+  Locale? _locale;
+
+  @override
+  void initState() {
+    super.initState();
+    loadSavedLocale();
+  }
+
+  Future<void> loadSavedLocale() async {
+    final prefs = await SharedPreferences.getInstance();
+    final languageCode = prefs.getString('languageCode') ?? 'en';
+    setState(() {
+      _locale = Locale(languageCode);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        debugShowCheckedModeBanner: false,
+        locale: _locale,
+        theme: ThemeData(primarySwatch: Colors.green),
+        home: MyPage1());
+  }
+}
+
+class MyPage1 extends StatefulWidget {
+  @override
+  _MyPage1State createState() => _MyPage1State();
+}
+
+class _MyPage1State extends State<MyPage1> {
+  Widget buildImage(String path) =>
+      Center(child: Image.asset(path, width: 300));
+
+  Widget CustomButton({
+    required String title,
+    required IconData icon,
+    required VoidCallback onClick,
+  }) =>
+      Container(
+        width: 280,
+        child: ElevatedButton(
+          onPressed: onClick,
+          child: Row(
+            children: [
+              Icon(icon),
+              SizedBox(width: 20),
+              Text(title),
+            ],
+          ),
+        ),
+      );
   File? _image;
 
   Future getImage(ImageSource source) async {
@@ -70,7 +128,7 @@ class _Page1State extends State<Page1> {
     if (_image == null) return;
 
     final uri = Uri.parse(
-        'http://ec2-108-136-59-232.ap-southeast-3.compute.amazonaws.com/upload');
+        'http://ec2-43-218-89-240.ap-southeast-3.compute.amazonaws.com/upload');
     final request = http.MultipartRequest('POST', uri);
     request.files.add(
       await http.MultipartFile.fromPath(
@@ -96,11 +154,10 @@ class _Page1State extends State<Page1> {
     }
   }
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Scan Fruits',
+        title: Text(AppLocalizations.of(context)!.scanfruit,
             style: TextStyle(
               fontSize: 25,
               fontFamily: 'Roboto',
@@ -109,59 +166,45 @@ class _Page1State extends State<Page1> {
               letterSpacing: 2.0,
               wordSpacing: 2.0,
             )),
-            centerTitle: true,
+        centerTitle: true,
       ),
       body: Center(
-          child: Column(
-        children: [
-          SizedBox(
-            height: 40,
-          ),
-          _image != null
-              ? Image.file(_image!, width: 250, height: 250, fit: BoxFit.cover)
-              : buildImage('assets/ebook.png'),
-          SizedBox(
-            height: 40,
-          ),
-          CustomButton(
-              title: 'Pick from gallery',
-              icon: Icons.image_outlined,
-              onClick: () => getImage(ImageSource.gallery)),
-          SizedBox(
-            height: 10,
-          ),
-          CustomButton(
-              title: 'Take a photo',
-              icon: Icons.camera_outlined,
-              onClick: () => getImage(ImageSource.camera)),
-          CustomButton(
-              title: 'Scan',
-              icon: Icons.scanner_outlined,
-              onClick: () => _uploadImage(context))
-        ],
-      )),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 40,
+            ),
+            _image != null
+                ? Image.file(_image!,
+                    width: 250, height: 250, fit: BoxFit.cover)
+                : buildImage('assets/ebook.png'),
+            SizedBox(
+              height: 40,
+            ),
+            CustomButton(
+                title: AppLocalizations.of(context)!.uploadimage,
+                icon: Icons.image_outlined,
+                onClick: () => getImage(ImageSource.gallery)),
+            SizedBox(
+              height: 10,
+            ),
+            CustomButton(
+                title: AppLocalizations.of(context)!.takephoto,
+                icon: Icons.camera_outlined,
+                onClick: () => getImage(ImageSource.camera)),
+            SizedBox(
+              height: 10,
+            ),
+            CustomButton(
+                title: AppLocalizations.of(context)!.scanfruit,
+                icon: Icons.scanner_outlined,
+                onClick: () => _uploadImage(context)),
+            SizedBox(
+              height: 10,
+            ),
+          ],
+        ),
+      ),
     );
   }
-
-  Widget buildImage(String path) =>
-      Center(child: Image.asset(path, width: 300));
-
-  Widget CustomButton({
-    required String title,
-    required IconData icon,
-    required VoidCallback onClick,
-  }) =>
-      Container(
-        width: 280,
-        child: ElevatedButton(
-          onPressed: onClick,
-          child: Row(
-            children: [
-              Icon(icon),
-              SizedBox(width: 20),
-              Text(title),
-            ],
-          ),
-        ),
-      );
 }

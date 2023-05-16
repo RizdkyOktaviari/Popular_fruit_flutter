@@ -1,0 +1,61 @@
+{
+    "language": "English",
+    "@language":{
+        "description": "The current Language"
+    },
+    "helloWorld": "Hello World!",
+    "@helloWorld": {
+        "description": "A programmer greeting"
+    },
+    "scanfruit": "Scan Fruit",
+    "takephoto": "Take a Photo",
+    "uploadimage": "Upload Image",
+    "learnfruits": "Learn Fruits",
+    "hello": "Hello {username}",
+    "@hello": {
+        "description": "A welcome message",
+        "placeholders": {
+            "username": {
+                "type":"String"
+            }
+        }
+    },
+    "setting": "Setting",
+    "languagesetting":"Language Setting",
+    "apple": "Apple",
+    "banana": "Banana",
+    "beetroot": "Beetroot",
+    "bellpepper": "Bell Pepper",
+    "cabbage": "Cabbage",
+    "capsicum": "Capsicum",
+    "carrot": "Carrot",
+    "cauliflower": "Cauliflower",
+    "chillipepper": "Chilli Pepper",
+    "corn": "Corn",
+    "cucumber": "Cucumber",
+    "eggplant": "Eggplant",
+    "garlic": "Garlic",
+    "ginger": "Ginger",
+    "grapes": "Grapes",
+    "jalepeno": "Jalepeno",
+    "kiwi": "Kiwi",
+    "lemon": "Lemon",
+    "lettuce": "Lettuce",
+    "mango": "Mango",
+    "onion": "Onion",
+    "orange": "Orange",
+    "paprika": "Paprika",
+    "pear": "Pear",
+    "peas": "Peas",
+    "pineapple": "Pineapple",
+    "pomegranate": "Pomegranate",
+    "potato": "Potato",
+    "raddish": "Raddish",
+    "soybeans": "Soy Beans",
+    "spinach": "Spinach",
+    "sweetcorn": "Sweetcorn",
+    "sweetpotato": "Sweetpotato",
+    "tomato": "Tomato",
+    "turnip": "Turnip",
+    "watermelon": "Watermelon"
+}

@@ -63,12 +63,12 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Icon(
                           Icons.home,
-                          color: currentTab == 0 ? Colors.blue : Colors.grey,
+                          color: currentTab == 0 ? Colors.green : Colors.grey,
                         ),
                         Text(
-                          'Page1',
+                          'Home',
                           style: TextStyle(
-                            color: currentTab == 0 ? Colors.blue : Colors.grey,
+                            color: currentTab == 0 ? Colors.green : Colors.grey,
                           ),
                         ),
                       ],
@@ -87,12 +87,12 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Icon(
                           Icons.search,
-                          color: currentTab == 1 ? Colors.blue : Colors.grey,
+                          color: currentTab == 1 ? Colors.green : Colors.grey,
                         ),
                         Text(
-                          'Page2',
+                          'Index',
                           style: TextStyle(
-                            color: currentTab == 1 ? Colors.blue : Colors.grey,
+                            color: currentTab == 1 ? Colors.green : Colors.grey,
                           ),
                         ),
                       ],
@@ -116,12 +116,12 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Icon(
                           Icons.person,
-                          color: currentTab == 2 ? Colors.blue : Colors.grey,
+                          color: currentTab == 2 ? Colors.green : Colors.grey,
                         ),
                         Text(
                           'Page3',
                           style: TextStyle(
-                            color: currentTab == 2 ? Colors.blue : Colors.grey,
+                            color: currentTab == 2 ? Colors.green : Colors.grey,
                           ),
                         ),
                       ],
@@ -140,12 +140,12 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Icon(
                           Icons.settings,
-                          color: currentTab == 3 ? Colors.blue : Colors.grey,
+                          color: currentTab == 3 ? Colors.green : Colors.grey,
                         ),
                         Text(
-                          'Page4',
+                          'Setting',
                           style: TextStyle(
-                            color: currentTab == 3 ? Colors.blue : Colors.grey,
+                            color: currentTab == 3 ? Colors.green : Colors.grey,
                           ),
                         ),
                       ],
