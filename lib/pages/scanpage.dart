@@ -6,10 +6,52 @@ import 'package:flutter_ppf/utils.dart';
 import 'Fruit_detail.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_ppf/models/FruitDataModel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class Scene extends StatelessWidget {
+class ScanPage extends StatefulWidget {
+  const ScanPage({Key? key, required this.stage}) : super(key: key);
   final String stage;
-  Scene({required this.stage});
+
+  @override
+  _ScanPageState createState() => _ScanPageState();
+}
+
+class _ScanPageState extends State<ScanPage> {
+  Locale? _locale;
+
+
+  @override
+  void initState() {
+    super.initState();
+    loadSavedLocale();
+  }
+
+  Future<void> loadSavedLocale() async {
+    final prefs = await SharedPreferences.getInstance();
+    final languageCode = prefs.getString('languageCode') ?? 'en';
+    setState(() {
+      _locale = Locale(languageCode);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        debugShowCheckedModeBanner: false,
+        locale: _locale,
+        theme: ThemeData(primarySwatch: Colors.green),
+        home: MyScanPage(
+          stage: "potato",
+        ));
+  }
+}
+
+class MyScanPage extends StatelessWidget {
+  final String stage;
+  MyScanPage({required this.stage});
 
   static List<String> fruitname = [
     'Apple',
