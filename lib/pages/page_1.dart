@@ -12,6 +12,7 @@ import 'Fruit_detail.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Page1 extends StatefulWidget {
   const Page1({super.key});
@@ -37,14 +38,43 @@ class _Page1State extends State<Page1> {
     });
   }
 
+  MaterialColor _createMaterialColor(Color color) {
+    final List<double> strengths = <double>[.05];
+    final Map<int, Color> swatch = <int, Color>{};
+    final int r = color.red, g = color.green, b = color.blue;
+
+    for (int i = 1; i < 10; i++) {
+      strengths.add(0.1 * i);
+    }
+
+    for (final double strength in strengths) {
+      final double ds = 0.5 - strength;
+      swatch[(strength * 1000).round()] = Color.fromRGBO(
+        r + ((ds < 0 ? r : (255 - r)) * ds).round(),
+        g + ((ds < 0 ? g : (255 - g)) * ds).round(),
+        b + ((ds < 0 ? b : (255 - b)) * ds).round(),
+        1,
+      );
+    }
+
+    return MaterialColor(color.value, swatch);
+  }
+
   @override
   Widget build(BuildContext context) {
+    Color color_red = Color(0xFFE27D60);
+    Color light_green = Color(0xFF85DCB0);
+    Color light_brown = Color(0xFFE8A87C);
+    Color light_purple = Color(0xFFC38D9E);
+    Color color_green = Color(0xFF41B3A3);
+    Color background_color = Color(0xFF7DC2AE);
+
     return MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         debugShowCheckedModeBanner: false,
         locale: _locale,
-        theme: ThemeData(primarySwatch: Colors.green),
+        theme: ThemeData(primarySwatch: _createMaterialColor(background_color)),
         home: MyPage1());
   }
 }
@@ -112,6 +142,7 @@ class _MyPage1State extends State<MyPage1> {
       }
       // final imageTemporary = File(image.path);
     } on PlatformException catch (e) {
+      Fluttertoast.showToast(msg: e.message.toString());
       print("Failed to pick image: $e");
     }
   }
@@ -125,7 +156,11 @@ class _MyPage1State extends State<MyPage1> {
   }
 
   Future<void> _uploadImage(BuildContext context) async {
-    if (_image == null) return;
+    if (_image == null) {
+      Fluttertoast.showToast(msg: "Please select an image.");
+      return;
+    }
+    Fluttertoast.showToast(msg: "Please wait while we are processing");
 
     final uri = Uri.parse(
         'http://ec2-43-218-89-240.ap-southeast-3.compute.amazonaws.com/upload');
@@ -142,14 +177,17 @@ class _MyPage1State extends State<MyPage1> {
         final jsonResponse = jsonDecode(await response.stream.bytesToString());
         final stage = jsonResponse['stage'];
         print('Image uploaded successfully! And its:' + stage);
+        Fluttertoast.showToast(msg: "Image scanned successfully!");
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => FruitDetail(stage: stage)),
         );
       } else {
+        Fluttertoast.showToast(msg: "Error uploading image.");
         print('Error uploading image.');
       }
     } catch (e) {
+      Fluttertoast.showToast(msg: e.toString());
       print(e);
     }
   }

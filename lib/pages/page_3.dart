@@ -13,12 +13,18 @@ class _Page3State extends State<Page3> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Page 3'),
+        centerTitle: true,
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Go back!'),
-        ),
+        child: Text("Coming Soon",
+            style: TextStyle(
+              fontSize: 25,
+              fontFamily: 'Roboto',
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 2.0,
+              wordSpacing: 2.0,
+            )),
       ),
     );
   }

@@ -26,6 +26,7 @@ class _HomePageState extends State<HomePage> {
 
   final PageStorageBucket bucket = PageStorageBucket();
   Widget currentScreen = Page1();
+  Color background_color = Color(0xFF7DC2AE);
 
   @override
   Widget build(BuildContext context) {
@@ -63,12 +64,16 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Icon(
                           Icons.home,
-                          color: currentTab == 0 ? Colors.green : Colors.grey,
+                          color: currentTab == 0
+                              ? background_color
+                              : Colors.grey,
                         ),
                         Text(
                           'Home',
                           style: TextStyle(
-                            color: currentTab == 0 ? Colors.green : Colors.grey,
+                            color: currentTab == 0
+                                ? background_color
+                                : Colors.grey,
                           ),
                         ),
                       ],
@@ -87,12 +92,16 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Icon(
                           Icons.search,
-                          color: currentTab == 1 ? Colors.green : Colors.grey,
+                          color: currentTab == 1
+                              ? background_color
+                              : Colors.grey,
                         ),
                         Text(
                           'Index',
                           style: TextStyle(
-                            color: currentTab == 1 ? Colors.green : Colors.grey,
+                            color: currentTab == 1
+                                ? background_color
+                                : Colors.grey,
                           ),
                         ),
                       ],
@@ -116,12 +125,16 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Icon(
                           Icons.person,
-                          color: currentTab == 2 ? Colors.green : Colors.grey,
+                          color: currentTab == 2
+                              ? background_color
+                              : Colors.grey,
                         ),
                         Text(
                           'Page3',
                           style: TextStyle(
-                            color: currentTab == 2 ? Colors.green : Colors.grey,
+                            color: currentTab == 2
+                                ? background_color
+                                : Colors.grey,
                           ),
                         ),
                       ],
@@ -140,12 +153,16 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Icon(
                           Icons.settings,
-                          color: currentTab == 3 ? Colors.green : Colors.grey,
+                          color: currentTab == 3
+                              ? background_color
+                              : Colors.grey,
                         ),
                         Text(
                           'Setting',
                           style: TextStyle(
-                            color: currentTab == 3 ? Colors.green : Colors.grey,
+                            color: currentTab == 3
+                                ? background_color
+                                : Colors.grey,
                           ),
                         ),
                       ],
