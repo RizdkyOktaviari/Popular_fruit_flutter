@@ -86,7 +86,7 @@ class MyPage1 extends StatefulWidget {
 
 class _MyPage1State extends State<MyPage1> {
   Widget buildImage(String path) =>
-      Center(child: Image.asset(path, width: 300));
+      Center(child: Image.asset(path, width: 250, height: 250, fit: BoxFit.cover));
 
   Widget CustomButton({
     required String title,
@@ -95,13 +95,29 @@ class _MyPage1State extends State<MyPage1> {
   }) =>
       Container(
         width: 280,
+        height: 50,
         child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Color(0xFF7DC2AE),
+            onPrimary: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(32.0),
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          ),
           onPressed: onClick,
           child: Row(
             children: [
               Icon(icon),
               SizedBox(width: 20),
-              Text(title),
+              Text(title,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontFamily: 'Roboto',
+                    color: Colors.white,
+                    fontWeight: FontWeight.normal,
+                    letterSpacing: 2.0,
+                  )),
             ],
           ),
         ),
@@ -206,41 +222,49 @@ class _MyPage1State extends State<MyPage1> {
             )),
         centerTitle: true,
       ),
-      body: Center(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 40,
-            ),
-            _image != null
-                ? Image.file(_image!,
-                    width: 250, height: 250, fit: BoxFit.cover)
-                : buildImage('assets/ebook.png'),
-            SizedBox(
-              height: 40,
-            ),
-            CustomButton(
-                title: AppLocalizations.of(context)!.uploadimage,
-                icon: Icons.image_outlined,
-                onClick: () => getImage(ImageSource.gallery)),
-            SizedBox(
-              height: 10,
-            ),
-            CustomButton(
-                title: AppLocalizations.of(context)!.takephoto,
-                icon: Icons.camera_outlined,
-                onClick: () => getImage(ImageSource.camera)),
-            SizedBox(
-              height: 10,
-            ),
-            CustomButton(
-                title: AppLocalizations.of(context)!.scanfruit,
-                icon: Icons.scanner_outlined,
-                onClick: () => _uploadImage(context)),
-            SizedBox(
-              height: 10,
-            ),
-          ],
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/6.png'), // Replace with your image path
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 40,
+              ),
+              _image != null
+                  ? Image.file(_image!,
+                      width: 250, height: 250, fit: BoxFit.cover)
+                  : buildImage('assets/jpg_20230524_170104_0000.jpg'),
+              SizedBox(
+                height: 40,
+              ),
+              CustomButton(
+                  title: AppLocalizations.of(context)!.uploadimage,
+                  icon: Icons.image_outlined,
+                  onClick: () => getImage(ImageSource.gallery)),
+              SizedBox(
+                height: 15,
+              ),
+              CustomButton(
+                  title: AppLocalizations.of(context)!.takephoto,
+                  icon: Icons.camera_outlined,
+                  onClick: () => getImage(ImageSource.camera)),
+              SizedBox(
+                height: 15,
+              ),
+              CustomButton(
+                  title: AppLocalizations.of(context)!.scanfruit,
+                  icon: Icons.upload_outlined,
+                  onClick: () => _uploadImage(context)),
+              SizedBox(
+                height: 15,
+              ),
+            ],
+          ),
         ),
       ),
     );

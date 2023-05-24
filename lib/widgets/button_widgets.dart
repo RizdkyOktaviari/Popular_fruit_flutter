@@ -13,18 +13,18 @@ class ButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ElevatedButton(
         style: ElevatedButton.styleFrom(
+          backgroundColor: Color.fromARGB(255, 245, 240, 116),
           shape: StadiumBorder(),
-          primary: Theme.of(context).primaryColor,
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         ),
         child: Text(text,
             style: TextStyle(
               fontSize: 25,
-              fontFamily: 'Roboto',
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 2.0,
-              wordSpacing: 2.0,
+              fontFamily: 'MyCustomFont',
+              color: Color.fromARGB(255, 151, 209, 50),
+              fontWeight: FontWeight.normal,
+              letterSpacing: 1.0,
+              wordSpacing: 1.0,
             )),
         onPressed: onClicked,
       );

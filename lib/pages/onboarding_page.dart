@@ -7,45 +7,36 @@ import 'package:shared_preferences/shared_preferences.dart';
 class OnBoardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // checkOnboardingStatus(context);
-
     return SafeArea(
       child: IntroductionScreen(
         pages: [
           PageViewModel(
-            title: "Fractional shares",
-            body:
-                "Instead of having to buy an entire share, invest any amount you want.",
-            image: buildImage('assets/ebook.png'),
+            title: "",
+            body: "",
             decoration: getPageDecoration(),
           ),
           PageViewModel(
-            title: "Learn as you go",
-            body:
-                "Download the Stockpile app and master the market with our mini-lesson.",
-            image: buildImage('assets/learn.png'),
+            title: "",
+            body: "",
             decoration: getPageDecoration(),
           ),
           PageViewModel(
-            title: "Start investing",
-            body:
-                "Once you've learned the basics, you can start investing in companies you love.",
-            image: buildImage('assets/manthumbs.png'),
+            title: "",
+            body: "",
             decoration: getPageDecoration(),
           ),
           PageViewModel(
-            title: "Get started",
-            body: 'Start your journey',
+            title: "",
+            body: '',
             footer: Center(
               child: ButtonWidget(
-                text: 'Start Reading',
+                text: 'Start Learning',
                 onClicked: () {
                   setOnboardingComplete();
                   goToHome(context);
                 },
               ),
             ),
-            image: buildImage('assets/readingbook.png'),
             decoration: getPageDecoration(),
           ),
         ],
@@ -54,15 +45,21 @@ class OnBoardingPage extends StatelessWidget {
           goToHome(context);
         },
         showNextButton: true,
-        next: const Icon(Icons.arrow_forward),
+        next: const Icon(
+          Icons.arrow_forward,
+          color: Color.fromARGB(255, 151, 209, 50),
+        ),
         showBackButton: true,
-        back: const Icon(Icons.arrow_back),
+        back: const Icon(
+          Icons.arrow_back,
+          color: Color.fromARGB(255, 151, 209, 50),
+        ),
         dotsDecorator: getDotDecoration(),
         showDoneButton: false,
+        globalBackgroundColor: Color.fromARGB(255, 245, 240, 116),
       ),
     );
   }
-
 
   void goToHome(BuildContext context) => Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) => HomePage()),
@@ -79,6 +76,7 @@ class OnBoardingPage extends StatelessWidget {
   DotsDecorator getDotDecoration() => DotsDecorator(
         color: Color(0xFFBDBDBD),
         size: Size(10, 10),
+        activeColor: Color.fromARGB(255, 151, 209, 50),
         activeSize: Size(22, 10),
         activeShape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
@@ -90,6 +88,12 @@ class OnBoardingPage extends StatelessWidget {
         bodyTextStyle: TextStyle(fontSize: 20),
         bodyPadding: EdgeInsets.all(16).copyWith(bottom: 0),
         imagePadding: EdgeInsets.all(24),
-        pageColor: Colors.white,
+        boxDecoration: BoxDecoration(
+          image: DecorationImage(
+            image:
+                AssetImage('assets/cover.png'), // Replace with your image path
+            fit: BoxFit.cover,
+          ),
+        ),
       );
 }

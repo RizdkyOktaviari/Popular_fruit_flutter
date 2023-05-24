@@ -455,8 +455,8 @@ class _MyFruitDetailState extends State<MyFruitDetail> {
     descc();
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'RESULT',
+        title: Text(
+          AppLocalizations.of(context)!.result,
           style: TextStyle(
             fontSize: 20,
             fontFamily: 'Chewy',
@@ -483,8 +483,11 @@ class _MyFruitDetailState extends State<MyFruitDetail> {
                 EdgeInsets.fromLTRB(33 * fem, 50 * fem, 34 * fem, 113 * fem),
             width: double.infinity,
             decoration: BoxDecoration(
-              color: Color(0xfff4f5f9),
-              borderRadius: BorderRadius.circular(8 * fem),
+              // Add the background image here
+              image: DecorationImage(
+                image: AssetImage('assets/7.png'),
+                fit: BoxFit.cover,
+              ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -517,11 +520,11 @@ class _MyFruitDetailState extends State<MyFruitDetail> {
                       padding: EdgeInsets.zero,
                     ),
                     child: Container(
-                      width: double.infinity,
-                      height: 61 * fem,
+                      width: 200 * fem,
+                      height: 55 * fem,
                       decoration: BoxDecoration(
-                        color: Color(0xff5667fd),
-                        borderRadius: BorderRadius.circular(12 * fem),
+                        color: Color(0xFF7DC2AE),
+                        borderRadius: BorderRadius.circular(36 * fem),
                         boxShadow: [
                           BoxShadow(
                             color: Color(0x19000000),
@@ -532,14 +535,16 @@ class _MyFruitDetailState extends State<MyFruitDetail> {
                       ),
                       child: Center(
                         child: Text(
-                          'Spell',
+                          AppLocalizations.of(context)!.pronounce,
                           textAlign: TextAlign.center,
-                          style: SafeGoogleFont(
-                            'Exo',
-                            fontSize: 20 * ffem,
-                            fontWeight: FontWeight.w600,
+                          style: TextStyle(
+                            fontFamily: 'MyCustomFont',
+                            fontSize: 30 * ffem,
+                            fontWeight: FontWeight.normal,
                             height: 1.33 * ffem / fem,
                             color: Color(0xffffffff),
+                            letterSpacing: 1.0,
+                            wordSpacing: 1.0,
                           ),
                         ),
                       ),

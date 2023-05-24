@@ -114,74 +114,98 @@ class _MyPage4State extends State<MyPage4> {
             )),
         centerTitle: true,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30.0),
-              child: Text(
-                AppLocalizations.of(context)!.languagesetting,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 30,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/8.png'), // Replace with your image path
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(35),
+                    color: Color(0xFF7DC2AE),
+                    border: Border.all(
+                      color: Colors.white30, // Set the color of the border
+                      width: 4, // Set the width of the border
+                    ),
+                  ),
+                  child: Text(
+                    AppLocalizations.of(context)!.languagesetting,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontFamily: 'MyCustomFont',
+                      color: Colors.white,
+                      fontWeight: FontWeight.normal,
+                      letterSpacing: 1.0,
+                      wordSpacing: 1.0,
+                    ),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Row(
-              children: [
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      widget.setLocale(const Locale('id'));
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Image.asset('assets/lang_id.jpg'),
+              const SizedBox(
+                height: 30,
+              ),
+              Row(
+                children: [
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        widget.setLocale(const Locale('id'));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Image.asset('assets/lang_id.jpg'),
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      widget.setLocale(const Locale('en'));
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Image.asset('assets/lang_uk.jpg'),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        widget.setLocale(const Locale('en'));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Image.asset('assets/lang_uk.jpg'),
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      widget.setLocale(const Locale('ms'));
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Image.asset('assets/lang_ms.jpg'),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        widget.setLocale(const Locale('ms'));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Image.asset('assets/lang_ms.jpg'),
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-          ],
+                ],
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+            ],
+          ),
         ),
       ),
     );

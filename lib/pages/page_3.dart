@@ -15,16 +15,25 @@ class _Page3State extends State<Page3> {
         title: const Text('Page 3'),
         centerTitle: true,
       ),
-      body: Center(
-        child: Text("Coming Soon",
-            style: TextStyle(
-              fontSize: 25,
-              fontFamily: 'Roboto',
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 2.0,
-              wordSpacing: 2.0,
-            )),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+                'assets/6.png'), // Replace with your image path
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Text("Coming Soon",
+              style: TextStyle(
+                fontSize: 25,
+                fontFamily: 'Roboto',
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 2.0,
+                wordSpacing: 2.0,
+              )),
+        ),
       ),
     );
   }

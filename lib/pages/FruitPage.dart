@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_ppf/models/FruitDetailModel.dart';
@@ -60,6 +61,12 @@ class _FruitPageState extends State<FruitPage> {
     return MaterialColor(color.value, swatch);
   }
 
+  Future<void> _loadFonts() async {
+    await Future.wait([
+      FontLoader('MyCustomFont').load(),
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     Color color_red = Color(0xFFE27D60);
@@ -70,15 +77,27 @@ class _FruitPageState extends State<FruitPage> {
     Color background_color = Color(0xFF7DC2AE);
 
     return MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        debugShowCheckedModeBanner: false,
-        locale: _locale,
-        theme: ThemeData(primarySwatch: _createMaterialColor(background_color)),
-        home: MyFruitPage(
-            colorFruit: colorFruit,
-            fruitID: fruitID,
-            navigateBack: navigateBack));
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      debugShowCheckedModeBanner: false,
+      locale: _locale,
+      theme: ThemeData(primarySwatch: _createMaterialColor(background_color)),
+      home: FutureBuilder(
+        future: _loadFonts(),
+        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            // Fonts are loaded, continue building your app
+            return MyFruitPage(
+                colorFruit: colorFruit,
+                fruitID: fruitID,
+                navigateBack: navigateBack);
+          } else {
+            // Fonts are still loading, show a loading indicator or splash screen
+            return CircularProgressIndicator();
+          }
+        },
+      ),
+    );
   }
 }
 
@@ -145,164 +164,226 @@ class _MyFruitPageState extends State<MyFruitPage> {
             ),
           ),
           centerTitle: true),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: size.height / 2.5,
-              width: size.width / 1.1,
-              margin: EdgeInsets.only(top: 20, bottom: 20),
-              decoration: BoxDecoration(
-                color: widget.colorFruit,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(24),
-                  topRight: Radius.circular(24),
-                  bottomLeft: Radius.circular(24),
-                  bottomRight: Radius.circular(24),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/7.png'), // Replace with your image path
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Container(
+                height: size.height / 2.5,
+                width: size.width / 1.1,
+                margin: EdgeInsets.only(top: 20, bottom: 20),
+                decoration: BoxDecoration(
+                  color: widget.colorFruit,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(24),
+                    topRight: Radius.circular(24),
+                    bottomLeft: Radius.circular(24),
+                    bottomRight: Radius.circular(24),
+                  ),
                 ),
-              ),
-              child: Stack(
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(top: 40),
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.all(20),
-                        child: Container(
-                          padding: EdgeInsets.only(top: 20),
-                          child: Hero(
-                            tag: fruitID,
-                            child: Image(
-                              image: AssetImage('assets/fruit_logo/' +
-                                  fruitDetails[fruitID].image),
-                              height: MediaQuery.of(context).size.height / 3,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 20),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Stack(
                   children: <Widget>[
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      name,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: 'Chewy',
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 2.0,
-                        wordSpacing: 2.0,
-                      ),
-                    ),
-                    Text(
-                      description,
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontFamily: 'Kalam',
-                        color: Colors.black,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      AppLocalizations.of(context)!.benefit,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: 'Chewy',
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 2.0,
-                        wordSpacing: 2.0,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      benefit,
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontFamily: 'Kalam',
-                        color: Colors.black,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      AppLocalizations.of(context)!.colorss,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: 'Chewy',
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 2.0,
-                        wordSpacing: 2.0,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(top: 40),
+                        )
+                      ],
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text(
-                          fruitcolor,
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontFamily: 'Kalam',
-                            color: Colors.black,
-                          ),
-                        ),
                         Container(
-                          margin: EdgeInsets.only(right: 20),
-                          decoration: BoxDecoration(
-                            color: widget.colorFruit,
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                          ),
-                          padding: EdgeInsets.all(7),
-                          child: GestureDetector(
-                            onTap: () {
-                              widget.navigateBack();
-                            },
-                            child: Text(
-                              AppLocalizations.of(context)!.mores,
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontFamily: 'Kalam',
-                                color: Colors.black,
+                          padding: EdgeInsets.all(20),
+                          child: Container(
+                            padding: EdgeInsets.only(top: 20),
+                            child: Hero(
+                              tag: fruitID,
+                              child: Image(
+                                image: AssetImage('assets/fruit_logo/' +
+                                    fruitDetails[fruitID].image),
+                                height: MediaQuery.of(context).size.height / 3,
                               ),
                             ),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
                   ],
                 ),
               ),
-            )
-          ],
+              Container(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 15),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(35),
+                          color: Colors.yellow[700],
+                          border: Border.all(
+                            color:
+                                Colors.white30, // Set the color of the border
+                            width: 4, // Set the width of the border
+                          ),
+                        ),
+                        child: Text(
+                          name,
+                          style: TextStyle(
+                            fontSize: 23,
+                            fontFamily: 'MyCustomFont',
+                            color: Colors.white,
+                            fontWeight: FontWeight.normal,
+                            letterSpacing: 2.0,
+                            wordSpacing: 2.0,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 20),
+                        child: Text(
+                          description,
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: 'Kalam',
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 15),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(35),
+                          color: Colors.yellow[700],
+                          border: Border.all(
+                            color:
+                                Colors.white30, // Set the color of the border
+                            width: 4, // Set the width of the border
+                          ),
+                        ),
+                        child: Text(
+                          AppLocalizations.of(context)!.benefit,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'MyCustomFont',
+                            color: Colors.white,
+                            fontWeight: FontWeight.normal,
+                            letterSpacing: 2.0,
+                            wordSpacing: 2.0,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 20),
+                        child: Text(
+                          benefit,
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: 'Kalam',
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 15),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(35),
+                          color: Colors.yellow[700],
+                          border: Border.all(
+                            color:
+                                Colors.white30, // Set the color of the border
+                            width: 4, // Set the width of the border
+                          ),
+                        ),
+                        child: Text(
+                          AppLocalizations.of(context)!.colorss,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'MyCustomFont',
+                            color: Colors.white,
+                            fontWeight: FontWeight.normal,
+                            letterSpacing: 2.0,
+                            wordSpacing: 2.0,
+                          ),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(left: 20),
+                            child: Text(
+                              fruitcolor,
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontFamily: 'Kalam',
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(right: 20),
+                            decoration: BoxDecoration(
+                              color: widget.colorFruit,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                            ),
+                            padding: EdgeInsets.all(7),
+                            child: GestureDetector(
+                              onTap: () {
+                                widget.navigateBack();
+                              },
+                              child: Text(
+                                AppLocalizations.of(context)!.mores,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontFamily: 'Kalam',
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 150,
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

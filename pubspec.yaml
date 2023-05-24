@@ -48,6 +48,8 @@ dependencies:
   shared_preferences: ^2.0.9
   provider: ^6.0.5
   fluttertoast: ^8.0.7
+  flutter_svg: ^0.22.0
+  
 
 
 dev_dependencies:
@@ -72,6 +74,11 @@ flutter:
   # the material Icons class.
   generate: true
   uses-material-design: true
+  fonts:
+    - family: MyCustomFont
+      fonts:
+        - asset: fonts/Gingies Bubble.ttf
+          weight: 400
 
   # To add assets to your application, add an assets section, like this:
   # assets:
